@@ -1,18 +1,33 @@
-def betterCounter(FILE_NAME):
-    d = {}
-    with open(FILE_NAME, "r") as f:
-        for word in f.readlines():
-            if not d.get(word, None):
-                d[word] = 1
-                continue
+from text_counter import betterCounter
+from pathlib import Path
+from time import sleep
 
-            d[word] += 1
-    
-    print(d)
+print("""
+Analyzes a text file and reports:
+- Letter count
+- Word count
+- Sentence count
 
-def main():
-    betterCounter(f"{__file__}")
+Requires a valid file path.
+""")
 
 
-if __name__ == "__main__":
-    main()
+FILE_PATH = input("Enter the file path...\n")
+
+ABS_PATH = Path(FILE_PATH).resolve()
+
+print("Trying to access the file...\n")
+sleep(2)
+
+if Path(ABS_PATH).exists():
+    print("File accessed, reading the file...\n")
+    sleep(2)
+
+    letters, words, sentences = betterCounter(ABS_PATH)
+
+    print(f"Letters: {letters}")
+    print(f"Words: {words}")
+    print(f"Sentences: {sentences}")
+
+else:
+    print("No such file or directory!")
